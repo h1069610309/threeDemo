@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"  
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"  
+    xsi:schemaLocation="  
+        http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd  
+        http://www.springframework.org/schema/context  
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd  
+        http://www.springframework.org/schema/tx  
+        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">  
+     <!-- 先引入外部的properties文件 -->
+     <context:property-placeholder location="classpath:/db.properties"/>
+     
+     <!-- 配置资源数据 -->
+     <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
+     <property name="driverClassName" value="${driver}"></property>
+     <property name="url" value="${url}"></property>
+     <property name="username" value="${user}"></property>
+     <property name="password" value="${password}"></property>
+     
+     </bean>
+     <!-- 配置SqlSessionFactory对象 -->
+     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+     <property name="dataSource" ref="dataSource"></property>
+     <!-- 引入mybatis配置文件 -->
+     <property name="configLocation" value="classpath:/mybatis_config.xml"></property>
+     </bean>
+     
+     <!-- 配置引入映射文件 基于注解方式的 -->
+     
+     
+     <bean id="studentDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+     <property name="mapperInterface" value="com.mypack.dao.StudentDao">
+     </property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>     
+     </bean>
+     
+     <!-- 配置事务管理器 -->
+     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+     <property name="dataSource" ref="dataSource" ></property>
+     </bean>
+     
+     <!-- 配置事务的注解驱动 -->
+     <tx:annotation-driven/>
+        </beans>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 引入外部properties文件  必须写在第一个子标签-->
+	<!-- 配置别名 -->
+	<!-- 别名配置方式一 -->
+	<!-- 
+	<typeAliases>
+		<typeAlias type="com.mypack.entity.User" alias="User"/>
+	
+	</typeAliases> -->
+	
+	<!-- 别名配置方式二-->
+	<!-- 包底下的所有类都可以直接写类名 -->
+	<typeAliases>
+		<package name="com.mypack.entity"/>
+	</typeAliases>
+	
+	
+	
+</configuration>
+
